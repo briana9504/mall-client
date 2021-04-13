@@ -15,6 +15,7 @@
 	<%
 		List<Ebook> ebookList = (List<Ebook>)(request.getAttribute("ebookList"));
 	%>
+	<!-- 5개씩 보여주기, 그 후 밑에 줄로 내리기 -->
 	<table border="1">
 		<tr>
 		<%
