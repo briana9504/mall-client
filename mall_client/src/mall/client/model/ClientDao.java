@@ -22,13 +22,14 @@ public class ClientDao {
 		//db연결
 		try {
 			conn = this.dbUtil.getConnection();
-			String sql ="SELECT client_mail clientMail, client_date clientDate FROM client WHERE client_mail=?";
+			String sql ="SELECT client_no clientNo, client_mail clientMail, client_date clientDate FROM client WHERE client_mail=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, client.getClientMail());
 			System.out.printf("stst: %s<ClientDao.selectClientOne>\n",stmt);
 			
 			rs = stmt.executeQuery();
 			if(rs.next()) {
+				clientOne.setClientNo(rs.getInt("clientNo"));
 				clientOne.setClientMail(rs.getString("clientMail"));
 				clientOne.setClientDate(rs.getString("clientDate"));	
 			}
