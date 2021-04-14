@@ -10,11 +10,11 @@
 	<form method="post" action="<%=request.getContextPath()%>/InsertClientController">
 		<div>
 			Mail:
-			<input type="text" name="clientMail">
+			<input type="text" name="clientMail" required="required">
 		</div>
 		<div>
 			PW:
-			<input type="password" name="clientPw">
+			<input type="password" name="clientPw" required="required">
 		</div>
 		<button type="submit">회원가입</button>
 	</form>

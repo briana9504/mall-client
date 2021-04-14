@@ -5,9 +5,42 @@ import mall.client.commons.*;
 
 import mall.client.vo.*;
 import java.sql.*;
+import java.util.Map;
 
 public class ClientDao {
 	private DBUtil dbUtil;
+	
+	//회원정보 보기 - > 넣을거 더 생각해보기
+	public Client selectClientOne(Client client) {
+		//return 초기화
+		Client clientOne = new Client();
+		//전처리
+		this.dbUtil = new DBUtil();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		//db연결
+		try {
+			conn = this.dbUtil.getConnection();
+			String sql ="SELECT client_mail clientMail, client_date clientDate FROM client WHERE client_mail=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, client.getClientMail());
+			System.out.printf("stst: %s<ClientDao.selectClientOne>\n",stmt);
+			
+			rs = stmt.executeQuery();
+			if(rs.next()) {
+				clientOne.setClientMail(rs.getString("clientMail"));
+				clientOne.setClientDate(rs.getString("clientDate"));	
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			this.dbUtil.close(rs, stmt, conn);
+		}
+		//return문
+		return clientOne;
+	}
 	
 	//회원가입 - 이메일 중복검사 필요
 	public int insertClient(Client client) {
