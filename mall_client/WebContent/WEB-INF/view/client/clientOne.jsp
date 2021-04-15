@@ -28,8 +28,11 @@
 			<td><%=clientOne.getClientDate().substring(0,10)%></td>
 		</tr>
 	</table>
-	<a href="<%=request.getContextPath()%>/">비밀번호수정</a>
-	<a href="<%=request.getContextPath()%>/">회원탈퇴</a>
+	<!-- /updateClientPwControlle.doGet() -> updateClientPw.jsp --!>
+	<!-- ClientDao.updateClientPw().doPost -> 성공: session.invalidate() - redirect:/IndexController -->
+	<a href="<%=request.getContextPath()%>/UpdateClientPwController">비밀번호수정</a>
+	<!-- DeleteClientController - ClientDao.deleteClient() cartDao.deleteCartByClient()  - redirect:/IndexController -->
+	<a href="<%=request.getContextPath()%>/DeleteClientController">회원탈퇴</a>
 
 </body>
 </html>

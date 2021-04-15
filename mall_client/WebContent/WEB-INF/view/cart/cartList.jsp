@@ -23,6 +23,8 @@
 			<td>ebookNo</td>
 			<td>ebookTitle</td>
 			<td>cartDate</td>
+			<td>삭제</td>
+			<td>주문</td>
 		</tr>
 		<%
 			for(Map<String, Object> map: cartList){
@@ -34,8 +36,12 @@
 			<tr>
 				<td><%=cartNo %></td>
 				<td><%=ebookNo %></td>
-				<td><%=ebookTitle %></td>
-				<td><%=cartDate.substring(0,11) %></td>
+				<td><a href="<%=request.getContextPath()%>/EbookOneController?ebookNo=<%=ebookNo%>"><%=ebookTitle %></a></td>
+				<td><%=cartDate.substring(0,11)%></td>
+				<!-- /DeleteCartController -> CartDao.deleteCart() ->redirect:/CartListController -->
+				<td><a href="<%=request.getContextPath()%>/DeleteCartController?ebookNo=<%=ebookNo%>">삭제</a></td>
+				<!-- /InsertOrdersContorller -> insertOrders(),deleteCart().ISSUE 트렌젝스처리 -> redirect:/OrdersListContoller 주문리스트-> -->
+				<td><a href="<%=request.getContextPath()%>/">주문</a></td>
 			</tr>
 		<%
 			}
