@@ -11,6 +11,31 @@ public class EbookDao {
 	
 	private DBUtil dbUtil;
 	
+	//ebooktotalCount구하기
+		public int totalCount(){
+			int totalCnt = 0;
+			this.dbUtil = new DBUtil();
+			Connection conn = null;
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			
+			try {
+				conn = this.dbUtil.getConnection();
+				String sql = "SELECT COUNT(*) cnt From ebook";
+				stmt = conn.prepareStatement(sql);
+				rs = stmt.executeQuery();
+				
+				if(rs.next()) {
+					totalCnt = rs.getInt("cnt");
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			} finally {
+				this.dbUtil.close(rs, stmt, conn);
+			}
+			return totalCnt;
+		}
+	
 	public Ebook selectEbookOne(int ebookNo) {
 		Ebook ebook = null;
 		this.dbUtil = new DBUtil();
@@ -47,6 +72,7 @@ public class EbookDao {
 		
 		return ebook;
 	}
+	//index 전체 페이지 수 구하기
 	
 	public List<Ebook> selectEbookListByPage(int beginRow, int rowPerPage){// index의 페이지별 ebook목록
 		

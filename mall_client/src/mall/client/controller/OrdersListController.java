@@ -26,15 +26,14 @@ public class OrdersListController extends HttpServlet {
 			response.sendRedirect(request.getContextPath()+"/IndexController");
 			return;
 		}	
-		//세션에서 clientMail 가져오기
-		String clientMail = ((Client)session.getAttribute("loginClient")).getClientMail();
-		System.out.printf("clientMail: %s<OrdersListController>\n", clientMail);
+		//세션에서 client 가져오기
+		Client client = (Client)session.getAttribute("loginClient");
 		//dao연결 - list가져오기
 		ordersDao = new OrdersDao();
-		List<Map<String, Object>> ordersList = ordersDao.selectOrdersList(clientMail);
+		List<Map<String, Object>> ordersList = ordersDao.selectOrdersListByClient(client);
 		//forward하기
 		request.setAttribute("ordersList", ordersList);
-		request.getRequestDispatcher("/WEB-INF/view/client/ordersList.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/view/orders/ordersList.jsp").forward(request, response);
 	}
 
 }

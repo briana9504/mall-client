@@ -9,11 +9,12 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/view/inc/mainMenu.jsp"></jsp:include>
-	<!-- 메뉴1 -->
-	<!-- 메뉴2 -->
 	<h1>index</h1>
+	<!-- 책제목 검색-->
 	<%
 		List<Ebook> ebookList = (List<Ebook>)(request.getAttribute("ebookList"));
+		int currnetPage = (int)request.getAttribute("currentPage");
+		int lastPage = (int)request.getAttribute("lastPage");
 	%>
 	<!-- 5개씩 보여주기, 그 후 밑에 줄로 내리기 -->
 	<table border="1">
@@ -44,5 +45,20 @@
 		%>
 		</tr>
 	</table>
+	<%
+		if(currnetPage > 1){
+	%>
+			<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currnetPage-1%>">이전</a>
+	<%
+		}
+	
+		if(currnetPage < lastPage){
+	%>
+	
+			<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currnetPage+1%>">다음</a>
+	<%
+		}
+	%>
+	
 </body>
 </html>

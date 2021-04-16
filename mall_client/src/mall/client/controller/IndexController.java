@@ -28,8 +28,17 @@ public class IndexController extends HttpServlet {
 		this.ebookDao = new EbookDao();
 		List<Ebook> ebookList = this.ebookDao.selectEbookListByPage(beginRow, rowPerPage);
 		
+		//마지막 페이지
+		int totalRow = ebookDao.totalCount();
+		int lastPage = totalRow/rowPerPage;
+		if(totalRow % rowPerPage != 0){
+			lastPage +=1;
+		}
+		
 		//(View forward)index.jsp파일 연결
+		request.setAttribute("lastPage", lastPage);
 		request.setAttribute("ebookList", ebookList);
+		request.setAttribute("currentPage", currnetPage);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/index.jsp");
 		rd.forward(request, response);
 	}

@@ -41,7 +41,7 @@
 				<!-- /DeleteCartController -> CartDao.deleteCart() ->redirect:/CartListController -->
 				<td><a href="<%=request.getContextPath()%>/DeleteCartController?ebookNo=<%=ebookNo%>">삭제</a></td>
 				<!-- /InsertOrdersContorller -> insertOrders(),deleteCart().ISSUE 트렌젝스처리 -> redirect:/OrdersListContoller 주문리스트-> -->
-				<td><a href="<%=request.getContextPath()%>/">주문</a></td>
+				<td><a href="<%=request.getContextPath()%>/InsertOrdersContorller?ebookNo=<%=ebookNo%>">주문</a></td>
 			</tr>
 		<%
 			}
