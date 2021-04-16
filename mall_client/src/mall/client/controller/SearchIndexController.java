@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import mall.client.model.CategoryDao;
 import mall.client.model.EbookDao;
 import mall.client.vo.Ebook;
-
+//SearchIndexController와 IndexController를 합쳐서 필요 없는 서블릿임
 /**
  * Servlet implementation class SearchIndexController
  */

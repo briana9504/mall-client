@@ -76,7 +76,7 @@
 					<%
 				} else{
 				%>
-					<a href="<%=request.getContextPath()%>/SearchIndexController?currentPage=<%=currentPage-1%>&searchWord=<%=searchWord%>">이전</a>
+					<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage-1%>&searchWord=<%=searchWord%>">이전</a>
 				<%		
 				}
 			} else{
@@ -94,7 +94,7 @@
 				<%	
 				} else{
 			%>
-				<a href="<%=request.getContextPath()%>/SearchIndexController?currentPage=<%=currentPage+1%>&searchWord=<%=searchWord%>">다음</a>
+				<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage+1%>&searchWord=<%=searchWord%>">다음</a>
 			<%	
 				}
 			}else{
@@ -105,7 +105,7 @@
 		}
 	%>
 	<!-- 검색기능 넣기 -->	
-	<form action="<%=request.getContextPath()%>/SearchIndexController" method="post">
+	<form action="<%=request.getContextPath()%>/IndexController" method="post">
 		ebookTitle:
 		<input type="text" name="searchWord">
 		<button type="submit">검색</button>
