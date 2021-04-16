@@ -11,31 +11,68 @@ public class EbookDao {
 	
 	private DBUtil dbUtil;
 	
-	//ebooktotalCount구하기
-		public int totalCount(){
-			int totalCnt = 0;
-			this.dbUtil = new DBUtil();
-			Connection conn = null;
-			PreparedStatement stmt = null;
-			ResultSet rs = null;
+	//전체 페이지  - 검색어
+	public int searchTotalCount(String searchWord){
+		int totalCnt = 0;
+		this.dbUtil = new DBUtil();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = this.dbUtil.getConnection();		
+			String sql = "SELECT COUNT(*) cnt From ebook WHERE ebook_title LIKE ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, "%"+searchWord+"%");
+			System.out.printf("stmt: %s<EbookDao.searchTotalCount>\n", stmt);
+			rs = stmt.executeQuery();
 			
-			try {
-				conn = this.dbUtil.getConnection();
+			if(rs.next()) {
+				totalCnt = rs.getInt("cnt");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			this.dbUtil.close(rs, stmt, conn);
+		}
+		return totalCnt;
+	}
+	
+	//ebooktotalCount구하기
+	public int totalCount(String categoryName){
+		int totalCnt = 0;
+		this.dbUtil = new DBUtil();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = this.dbUtil.getConnection();
+			if(categoryName == null) {
 				String sql = "SELECT COUNT(*) cnt From ebook";
 				stmt = conn.prepareStatement(sql);
-				rs = stmt.executeQuery();
+				System.out.printf("stmt: %s<EbookDao.totalCount>\n", stmt);
+			} else {
+				String sql = "SELECT COUNT(*) cnt From ebook WHERE category_name=?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, categoryName);
+				System.out.printf("stmt: %s<EbookDao.totalCount>\n", stmt);
 				
-				if(rs.next()) {
-					totalCnt = rs.getInt("cnt");
-				}
-			} catch(Exception e) {
-				e.printStackTrace();
-			} finally {
-				this.dbUtil.close(rs, stmt, conn);
 			}
-			return totalCnt;
+			
+			rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				totalCnt = rs.getInt("cnt");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			this.dbUtil.close(rs, stmt, conn);
 		}
-	
+		return totalCnt;
+	}
+	//책들 각자 페이지
 	public Ebook selectEbookOne(int ebookNo) {
 		Ebook ebook = null;
 		this.dbUtil = new DBUtil();
@@ -72,10 +109,8 @@ public class EbookDao {
 		
 		return ebook;
 	}
-	//index 전체 페이지 수 구하기
-	
-	public List<Ebook> selectEbookListByPage(int beginRow, int rowPerPage){// index의 페이지별 ebook목록
-		
+	// 검색별 - ebook목록: index
+	public List<Ebook> selectSearchEbookListByPage(int beginRow, int rowPerPage, String searchWord){
 		List<Ebook> list = new ArrayList<>();
 		this.dbUtil = new DBUtil();
 		Connection conn = null;
@@ -84,10 +119,14 @@ public class EbookDao {
 		
 		try {
 			conn = this.dbUtil.getConnection();
-			String sql = "SELECT ebook_no ebookNo, ebook_title ebookTitle, ebook_price ebookPrice FROM ebook ORDER BY ebook_date DESC LIMIT ?,?";
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, beginRow);
-			stmt.setInt(2, rowPerPage);
+			
+				String sql = "SELECT ebook_no ebookNo, ebook_title ebookTitle, ebook_price ebookPrice FROM ebook WHERE ebook_title like ? ORDER BY ebook_date DESC LIMIT ?,?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, "%"+searchWord+"%");
+				stmt.setInt(2, beginRow);
+				stmt.setInt(3, rowPerPage);	
+				System.out.printf("stmt: %s<EbookDao.selectEbookListByPage()>\n", stmt);
+			
 			rs = stmt.executeQuery();
 			while(rs.next()) {
 				Ebook ebook = new Ebook();
@@ -97,7 +136,51 @@ public class EbookDao {
 				//ebook.setEbookImg(rs.getString("ebookImg"));
 				list.add(ebook);
 			}			
-		} catch (SQLException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {//try절에서 예외가 발생해서 catch절로 가든 가지 않던 finally는 실행된다.
+			System.out.println(stmt);
+			this.dbUtil.close(rs, stmt, conn);
+		}
+		return list;
+	}
+
+	public List<Ebook> selectEbookListByPage(int beginRow, int rowPerPage, String categoryName){// index의 페이지별 ebook목록
+		
+		List<Ebook> list = new ArrayList<>();
+		this.dbUtil = new DBUtil();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = this.dbUtil.getConnection();
+			if(categoryName == null) { // 카테고리 없음
+				String sql = "SELECT ebook_no ebookNo, ebook_title ebookTitle, ebook_price ebookPrice FROM ebook ORDER BY ebook_date DESC LIMIT ?,?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, beginRow);
+				stmt.setInt(2, rowPerPage);
+				System.out.printf("stmt: %s<EbookDao.selectEbookListByPage()>\n", stmt);
+				
+			} else {// 카테고리 있음
+				String sql = "SELECT ebook_no ebookNo, ebook_title ebookTitle, ebook_price ebookPrice FROM ebook WHERE category_name=? ORDER BY ebook_date DESC LIMIT ?,?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, categoryName);
+				stmt.setInt(2, beginRow);
+				stmt.setInt(3, rowPerPage);	
+				System.out.printf("stmt: %s<EbookDao.selectEbookListByPage()>\n", stmt);
+			}
+			
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				Ebook ebook = new Ebook();
+				ebook.setEbookNo(rs.getInt("ebookNo"));
+				ebook.setEbookTitle(rs.getString("ebookTitle"));
+				ebook.setEbookPrice(rs.getInt("ebookPrice"));
+				//ebook.setEbookImg(rs.getString("ebookImg"));
+				list.add(ebook);
+			}			
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {//try절에서 예외가 발생해서 catch절로 가든 가지 않던 finally는 실행된다.
 			System.out.println(stmt);

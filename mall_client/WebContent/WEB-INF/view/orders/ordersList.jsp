@@ -9,6 +9,8 @@
 <body>
 	
 	<%
+		int currentPage = (int)request.getAttribute("currentPage");
+		int lastPage = (int)request.getAttribute("lastPage");
 		List<Map<String, Object>> ordersList = (List<Map<String, Object>>)request.getAttribute("ordersList");
 	%>
 	<!-- 메인메뉴 -->
@@ -48,5 +50,18 @@
 			}
 	%>
 	</table>
+	<%
+		if(currentPage > 1){
+	%>
+			<a href="<%=request.getContextPath()%>/OrdersListController?currentPage=<%=currentPage-1%>">이전</a>
+	<%
+		}
+	
+		if(currentPage < lastPage){
+	%>
+			<a href="<%=request.getContextPath()%>/OrdersListController?currentPage=<%=currentPage+1%>">다음</a>
+	<%
+		}
+	%>
 </body>
 </html>

@@ -14,6 +14,35 @@ import mall.client.vo.Orders;
 
 public class OrdersDao {
 	private DBUtil dbUtil;
+	
+	//전체 리스트 숫자 구하기
+	public int totalCount(Client client) {
+		int cnt = 0;
+		//전처리
+		this.dbUtil = new DBUtil();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		//db연결
+		try {
+			conn = this.dbUtil.getConnection();
+			String sql ="SELECT COUNT(*) cnt From orders WHERE client_no = ? ";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, client.getClientNo());
+			System.out.printf("stmt: %s<OrdersDao.totalCount()>\n", stmt);
+			rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				cnt = rs.getInt("cnt");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			this.dbUtil.close(rs, stmt, conn);
+		}
+		
+		return cnt;
+	}
 	//주문하기
 	public void insertOrders(Orders orders) {
 		this.dbUtil = new DBUtil();
@@ -40,7 +69,7 @@ public class OrdersDao {
 	}
 	
 	//주문 list가져오기
-	public List<Map<String, Object>> selectOrdersListByClient(Client client){
+	public List<Map<String, Object>> selectOrdersListByClient(int beginRow, int rowPerPage,Client client){
 		List<Map<String, Object>> list = new ArrayList<>();
 		//전처리
 		this.dbUtil = new DBUtil();
@@ -50,9 +79,11 @@ public class OrdersDao {
 		
 		try {
 			conn = this.dbUtil.getConnection();
-			String sql = "SELECT o.orders_no ordersNo, o.ebook_no ebookNo, o.orders_state ordersState, e.ebook_title ebookTitle, e.ebook_price ebookPrice, o.orders_date ordersDate FROM orders o INNER JOIN ebook e ON o.ebook_no = e.ebook_no WHERE o.client_no=? ORDER BY o.orders_date DESC";
+			String sql = "SELECT o.orders_no ordersNo, o.ebook_no ebookNo, o.orders_state ordersState, e.ebook_title ebookTitle, e.ebook_price ebookPrice, o.orders_date ordersDate FROM orders o INNER JOIN ebook e ON o.ebook_no = e.ebook_no WHERE o.client_no=? ORDER BY o.orders_date DESC LIMIT ?,?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, client.getClientNo());
+			stmt.setInt(2, beginRow);
+			stmt.setInt(3, rowPerPage);
 			System.out.printf("stmt: %s<OrdersDao.selectOrdersList()>\n", stmt);
 			
 			rs = stmt.executeQuery();
