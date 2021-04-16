@@ -22,6 +22,7 @@
 			<td>cartNo</td>
 			<td>ebookNo</td>
 			<td>ebookTitle</td>
+			<td>ebookPrice</td>
 			<td>cartDate</td>
 			<td>삭제</td>
 			<td>주문</td>
@@ -32,11 +33,13 @@
 				String ebookTitle = (String)map.get("ebookTitle");
 				int ebookNo = (int)map.get("ebookNo");
 				String cartDate = (String)map.get("cartDate");
+				int ebookPrice = (int)map.get("ebookPrice");
 		%>
 			<tr>
 				<td><%=cartNo %></td>
 				<td><%=ebookNo %></td>
 				<td><a href="<%=request.getContextPath()%>/EbookOneController?ebookNo=<%=ebookNo%>"><%=ebookTitle %></a></td>
+				<td><%=ebookPrice %></td>
 				<td><%=cartDate.substring(0,11)%></td>
 				<!-- /DeleteCartController -> CartDao.deleteCart() ->redirect:/CartListController -->
 				<td><a href="<%=request.getContextPath()%>/DeleteCartController?ebookNo=<%=ebookNo%>">삭제</a></td>

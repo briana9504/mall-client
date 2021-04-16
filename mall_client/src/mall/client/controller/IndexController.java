@@ -51,7 +51,7 @@ public class IndexController extends HttpServlet {
 		List<String> categoryList = this.categoryDao.CategoryList();
 		
 		//(View forward)index.jsp파일 연결
-		request.setAttribute("categoryName", ebook.getCategoryName());
+		request.setAttribute("categoryName", categoryName);
 		request.setAttribute("categoryList", categoryList);
 		request.setAttribute("lastPage", lastPage);
 		request.setAttribute("ebookList", ebookList);

@@ -18,7 +18,10 @@
 		List<Ebook> ebookList = (List<Ebook>)(request.getAttribute("ebookList"));
 		int currentPage = (int)request.getAttribute("currentPage");
 		int lastPage = (int)request.getAttribute("lastPage");
-		String categoryName = (String)request.getAttribute("categoryName");
+		String categoryName = null;
+		if(request.getAttribute("categoryName") != null){
+			categoryName = (String)request.getAttribute("categoryName");
+		}	
 		String searchWord = null;
 		if(request.getAttribute("searchWord") != null){
 			searchWord = (String)request.getAttribute("searchWord");
@@ -52,7 +55,7 @@
 								<%=ebook.getEbookTitle()%>
 							</a>
 						</div>
-						<div><%=ebook.getEbookPrice()%></div>
+						<div>&#8361;<%=ebook.getEbookPrice()%></div>
 					</td>
 		<%
 				if(i%5==0){
@@ -65,7 +68,6 @@
 		</tr>
 	</table>
 	<%
-		//검색 후 버튼이 안나옴!
 		if(currentPage > 1){
 			if(categoryName == null){
 				if(searchWord == null){
