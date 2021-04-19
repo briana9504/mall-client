@@ -15,6 +15,46 @@ import mall.client.vo.Orders;
 public class OrdersDao {
 	private DBUtil dbUtil;
 	
+	//베스트셀러
+	public List<Map<String, Object>> selectBastOrdersList(){
+		List<Map<String, Object>> list = new ArrayList<>();
+		//전처리
+		this.dbUtil = new DBUtil();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = this.dbUtil.getConnection();
+			//서브쿼리+그룹핑 사용
+			String sql = "SELECT t.ebook_no ebookNo, t.cnt cnt, e.ebook_title ebookTitle, e.ebook_price ebookPrice FROM "
+					+ "(SELECT ebook_no , COUNT(ebook_no) cnt FROM orders WHERE orders_state = '주문완료' GROUP BY ebook_no "
+					+ "HAVING cnt > 1 LIMIT 5) t INNER JOIN ebook e "
+					+ "ON t.ebook_no = e.ebook_no ORDER BY cnt DESC";
+			stmt = conn.prepareStatement(sql);
+
+			System.out.printf("stmt: %s<OrdersDao.selectBastOrdersList()>\n", stmt);
+			
+			rs = stmt.executeQuery();
+			
+			while(rs.next()){
+				Map<String, Object> map = new HashMap<>();
+				map.put("ebookNo", rs.getInt("ebookNo"));
+				map.put("ebookTitle", rs.getString("ebookTitle"));
+				map.put("ebookPrice", rs.getInt("ebookPrice"));
+				map.put("cnt", rs.getInt("cnt"));
+				list.add(map);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			this.dbUtil.close(rs, stmt, conn);
+		}
+		
+		return list;
+	}
+	
 	//전체 리스트 숫자 구하기
 	public int totalCount(Client client) {
 		int cnt = 0;

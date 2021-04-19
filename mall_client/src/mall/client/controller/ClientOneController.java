@@ -1,6 +1,9 @@
 package mall.client.controller;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,9 +36,9 @@ public class ClientOneController extends HttpServlet {
 		
 		//dao에서 정보 호출
 		clientdao = new ClientDao();
-		Client clientOne = this.clientdao.selectClientOne(client);
+		List<Map<String, Object>> clientOneList = this.clientdao.selectClientOne(client);
 		//clientOne으로 forward
-		request.setAttribute("clientOne", clientOne);
+		request.setAttribute("clientOneList", clientOneList);
 		request.getRequestDispatcher("/WEB-INF/view/client/clientOne.jsp").forward(request, response);
 	}
 

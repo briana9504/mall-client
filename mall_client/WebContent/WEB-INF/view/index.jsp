@@ -10,8 +10,7 @@
 <body>
 	<div>
 		<jsp:include page="/WEB-INF/view/inc/mainMenu.jsp"></jsp:include>
-	</div>
-	
+	</div>	
 	
 	<!-- 책제목 검색, 카테고리-->
 	<%
@@ -27,8 +26,42 @@
 			searchWord = (String)request.getAttribute("searchWord");
 		}
 		//카테고리 리스트
-		List<String> categoryList = (List<String>)(request.getAttribute("categoryList"));
+		List<String> categoryList = (List<String>)(request.getAttribute("categoryList"));;
+				
 	%>
+	
+	<h1>index</h1>
+	<!-- 5개씩 보여주기, 그 후 밑에 줄로 내리기 -->
+	<!-- best ebook  상품 5개 출력 -->
+	
+	<h3>Best Ebook</h3>
+	<table border="1">
+		<tr>
+	<%
+		List<Map<String, Object>> bestOrdersList = (List<Map<String, Object>>)(request.getAttribute("bestOrdersList"));
+		for(Map m: bestOrdersList){
+	%>
+			<td>
+				<div><img src="<%=request.getContextPath()%>/img/default.jpg"></div>
+						<!-- EbookOneController -> EbookDao.selectEbookOne -> ebookOne.jsp -->
+						<div>
+							<a href="<%=request.getContextPath()%>/EbookOneController?ebookNo=<%=m.get("ebookNo")%>">
+								<%=m.get("ebookTitle")%>
+							</a>
+						</div>
+						<div>&#8361;<%=m.get("ebookPrice") %></div>
+			
+			</td>
+	<%
+		}
+	%>
+		</tr>
+	</table>
+	
+	<!-- ebook 상품 출력 -->
+	<h3>ebookList</h3>	
+	
+	<!-- 카테고리 목록 -->
 			<a href="<%=request.getContextPath()%>/IndexController">전체</a>
 	<%
 		for(String cName: categoryList){
@@ -37,8 +70,6 @@
 	<%
 		}
 	%>
-	<h1>index</h1>
-	<!-- 5개씩 보여주기, 그 후 밑에 줄로 내리기 -->
 	<table border="1">
 		<tr>
 		<%
@@ -105,7 +136,7 @@
 		}
 	%>
 	<!-- 검색기능 넣기 -->	
-	<form action="<%=request.getContextPath()%>/IndexController" method="post">
+	<form action="<%=request.getContextPath()%>/IndexController" method="get">
 		ebookTitle:
 		<input type="text" name="searchWord">
 		<button type="submit">검색</button>
