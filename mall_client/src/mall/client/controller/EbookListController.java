@@ -1,6 +1,8 @@
 package mall.client.controller;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,15 +10,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import mall.client.model.*;
-import java.util.*;
-import mall.client.vo.*;
-// C -> M -> V
-@WebServlet("/IndexController")
-public class IndexController extends HttpServlet {
+
+import mall.client.model.CategoryDao;
+import mall.client.model.EbookDao;
+import mall.client.model.OrdersDao;
+import mall.client.vo.Ebook;
+
+/**
+ * Servlet implementation class EbookListController
+ */
+@WebServlet("/EbookListController")
+public class EbookListController extends HttpServlet {
 	private EbookDao ebookDao;
 	private CategoryDao categoryDao;
 	private OrdersDao ordersDao;
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.ebookDao = new EbookDao();
 		this.categoryDao = new CategoryDao();
@@ -44,7 +52,7 @@ public class IndexController extends HttpServlet {
 		if(request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
-		int rowPerPage = 10;
+		int rowPerPage = 12;
 		int beginRow = (currentPage - 1)*rowPerPage;
 		
 		//카테고리 리스트 호출
@@ -90,10 +98,8 @@ public class IndexController extends HttpServlet {
 		request.setAttribute("categoryName", categoryName);
 		request.setAttribute("categoryList", categoryList);
 		request.setAttribute("currentPage", currentPage);
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/indexTest.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/ebookList.jsp");
 		rd.forward(request, response);
 	}
-	
-	//검색 - do post 없애는게 유지보수에 쉬움 , do post없애고 검색기능도 get방식으로 바꿈
-
 }
+

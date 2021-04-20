@@ -23,7 +23,7 @@
 	<!-- 로그인 일때 -->
 	<div>
 		<div>
-			${loginClient.clientMail}님 반값습니다.
+			${loginClient.clientMail}님 반갑습니다.
 		</div>
 		<ul>
 			<li><a href="${pageContext.request.contextPath}/IndexController">홈</a></li>

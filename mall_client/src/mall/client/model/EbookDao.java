@@ -192,14 +192,14 @@ public class EbookDao {
 		try {
 			conn = this.dbUtil.getConnection();
 			if(categoryName == null) { // 카테고리 없음
-				String sql = "SELECT ebook_no ebookNo, ebook_title ebookTitle, ebook_price ebookPrice FROM ebook ORDER BY ebook_date DESC LIMIT ?,?";
+				String sql = "SELECT ebook_no ebookNo, ebook_state ebookState, category_name categoryName, ebook_title ebookTitle, ebook_price ebookPrice FROM ebook ORDER BY ebook_date DESC LIMIT ?,?";
 				stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, beginRow);
 				stmt.setInt(2, rowPerPage);
 				System.out.printf("stmt: %s<EbookDao.selectEbookListByPage()>\n", stmt);
 				
 			} else {// 카테고리 있음
-				String sql = "SELECT ebook_no ebookNo, ebook_title ebookTitle, ebook_price ebookPrice FROM ebook WHERE category_name=? ORDER BY ebook_date DESC LIMIT ?,?";
+				String sql = "SELECT ebook_no ebookNo, ebook_state ebookState, category_name categoryName, ebook_title ebookTitle, ebook_price ebookPrice FROM ebook WHERE category_name=? ORDER BY ebook_date DESC LIMIT ?,?";
 				stmt = conn.prepareStatement(sql);
 				stmt.setString(1, categoryName);
 				stmt.setInt(2, beginRow);
@@ -210,8 +210,10 @@ public class EbookDao {
 			rs = stmt.executeQuery();
 			while(rs.next()) {
 				Ebook ebook = new Ebook();
+				ebook.setEbookState(rs.getString("ebookState"));
 				ebook.setEbookNo(rs.getInt("ebookNo"));
 				ebook.setEbookTitle(rs.getString("ebookTitle"));
+				ebook.setCategoryName(rs.getString("categoryName"));
 				ebook.setEbookPrice(rs.getInt("ebookPrice"));
 				//ebook.setEbookImg(rs.getString("ebookImg"));
 				list.add(ebook);

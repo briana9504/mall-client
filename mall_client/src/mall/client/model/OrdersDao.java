@@ -27,9 +27,9 @@ public class OrdersDao {
 		try {
 			conn = this.dbUtil.getConnection();
 			//서브쿼리+그룹핑 사용
-			String sql = "SELECT t.ebook_no ebookNo, t.cnt cnt, e.ebook_title ebookTitle, e.ebook_price ebookPrice FROM "
+			String sql = "SELECT t.ebook_no ebookNo, t.cnt cnt, e.ebook_state ebookState, e.ebook_title ebookTitle, e.ebook_price ebookPrice FROM "
 					+ "(SELECT ebook_no , COUNT(ebook_no) cnt FROM orders WHERE orders_state = '주문완료' GROUP BY ebook_no "
-					+ "HAVING cnt > 1 LIMIT 5) t INNER JOIN ebook e "
+					+ "HAVING cnt > 1 LIMIT 10) t INNER JOIN ebook e "
 					+ "ON t.ebook_no = e.ebook_no ORDER BY cnt DESC";
 			stmt = conn.prepareStatement(sql);
 
@@ -39,6 +39,7 @@ public class OrdersDao {
 			
 			while(rs.next()){
 				Map<String, Object> map = new HashMap<>();
+				map.put("ebookState", rs.getString("ebookState"));
 				map.put("ebookNo", rs.getInt("ebookNo"));
 				map.put("ebookTitle", rs.getString("ebookTitle"));
 				map.put("ebookPrice", rs.getInt("ebookPrice"));
