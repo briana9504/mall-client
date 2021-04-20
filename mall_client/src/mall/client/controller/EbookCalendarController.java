@@ -61,6 +61,23 @@ public class EbookCalendarController extends HttpServlet {
 		//달별 ebooklist - database 에는 1월은 1월이므로 
 		List<Map<String, Object>> ebookListByMonth = this.ebookDao.selectEbookListByMonth(currentYear, currentMonth);
 		
+		//preYear, preMonth, nextYear, nextMonth
+		int preMonth = currentMonth - 1;
+		int preYear = currentYear;
+		if(preMonth == 0){
+			preMonth = 12;
+			preYear -=1;
+		}	
+		int nextMonth = currentMonth + 1;
+		int nextYear = currentYear;
+		if(nextMonth == 13){
+			nextMonth = 1;
+			nextYear +=1;
+		}
+		request.setAttribute("preMonth", preMonth);
+		request.setAttribute("preYear", preYear);
+		request.setAttribute("nextMonth", nextMonth);
+		request.setAttribute("nextYear", nextYear);
 		request.setAttribute("today", today);
 		request.setAttribute("ebookListByMonth", ebookListByMonth);
 		request.setAttribute("currentYear", currentYear);

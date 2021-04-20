@@ -7,7 +7,7 @@
 </head>
 <body>
 	<h1>회원가입</h1><!-- 동일한 주소를 입력해도 doget과 dopost를 나뉘어서 사용해서 같은 주소도 가능 -->
-	<form method="post" action="<%=request.getContextPath()%>/InsertClientController">
+	<form method="post" action="${pageContext.request.contextPath}/InsertClientController">
 		<div>
 			Mail:
 			<input type="text" name="clientMail" required="required">

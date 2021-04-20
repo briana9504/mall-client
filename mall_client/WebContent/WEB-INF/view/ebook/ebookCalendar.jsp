@@ -1,46 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ebookCalendar</title>
 </head>
 <body>
 	<div>
 		<jsp:include page="/WEB-INF/view/inc/mainMenu.jsp"></jsp:include>
 	</div>
 	<h1>Ebook Calendar</h1>
-	
-	<%
-		List<Map<String, Object>> ebookListByMonth = (List<Map<String, Object>>)request.getAttribute("ebookListByMonth");
-		int today = (Integer)request.getAttribute("today");
-		int currentYear = (Integer)request.getAttribute("currentYear");
-		int currentMonth = (Integer)request.getAttribute("currentMonth");
-		int endDay = (Integer)request.getAttribute("endDay");
-		int firstDayOfWeek = (Integer)request.getAttribute("firstDayOfWeek");
-		
-		int preMonth = currentMonth - 1;
-		int preYear = currentYear;
-		if(preMonth == 0){
-			preMonth = 12;
-			preYear -=1;
-		}	
-		int nextMonth = currentMonth + 1;
-		int nextYear = currentYear;
-		if(nextMonth == 13){
-			nextMonth = 1;
-			nextYear +=1;
-		}
-	%>
-	
-	
+
 	<!-- n행 7열 -->
 	<div>
-		<a href="<%=request.getContextPath()%>/EbookCalendarController?currentYear=<%=preYear%>&currentMonth=<%=preMonth%>">이전달</a>
-		<span><%=currentYear%>년</span>
-		<span><%=currentMonth%>월</span>
-		<a href="<%=request.getContextPath()%>/EbookCalendarController?currentYear=<%=nextYear%>&currentMonth=<%=nextMonth%>">다음달</a>
+		<a href="${pageContext.request.contextPath}/EbookCalendarController?currentYear=${preYear}&currentMonth=${preMonth}">이전달</a>
+		<span>${currentYear}년</span>
+		<span>${currentMonth}월</span>
+		<a href="${pageContext.request.contextPath}/EbookCalendarController?currentYear=${nextYear}&currentMonth=${nextMonth}">다음달</a>
 	</div>
 	<table border="1">
 		<tr>
@@ -53,66 +30,44 @@
 			<th>토</th>
 		</tr>
 		<tr>
-			<%	//i는 날짜 n은 요일
-				int n = 0;
-				for(int i=1-(firstDayOfWeek-1); i<=endDay; i++){//35일때
-					n++;
-					if(i<1){
-					%>
-						<td>&nbsp;</td>
-					<%	
-					} else{
-					%>	
-						<td>
-							<%=i%>
-							<%
-								if(i == today){
-									out.println("오늘!!");
-								}
-							%>		
-							<%
-								for(Map m : ebookListByMonth){
-									if( i == (Integer)m.get("d")){
-							%>		
+			<c:forEach var="i" begin="1" end="${endDay + (firstDayOfWeek-1)}" step="1">
+				
+				<c:if test="${i-(firstDayOfWeek-1) <= 0}">
+					<td>&nbsp;</td> 
+				</c:if>
+				
+				<c:if test="${i-(firstDayOfWeek-1) > 0}">
+					<td>
+						<div>${i-(firstDayOfWeek-1)}</div>
+						<div>
+							<c:forEach var="m" items="${ebookListByMonth}">
+								<c:if test="${(i-(firstDayOfWeek-1)) == m.d}">
 									<div>
-										<a href="<%=request.getContextPath()%>/EbookOneController?ebookNo=<%=m.get("ebookNo")%>">
-											<%
-												String ebookTitle = (String)m.get("ebookTitle");
-												if(ebookTitle.length() >10){
-											%>
-													<%=ebookTitle.substring(0,10) %>...
-											<% 
-												} else{
-											%>		
-													<%=ebookTitle %>
-											<%		
-												}
-											%>
+										<a href="${pageContext.request.contextPath}/EbookOneController?ebookNo=${m.ebookNo}">
+											<c:if test="${m.ebookTitle.length() > 10 }">
+												 ${m.ebookTitle.substring(0, 10)}...
+											</c:if>
+											<c:if test="${m.ebookTitle.length() <= 10 }">
+												${m.ebookTitle}
+											</c:if>
 										</a>
 									</div>
-							<% 		
-									}
-								}
-							%>
-						
-						</td>
-						<%
-							if(n%7 == 0){
-						%>
-							</tr><tr>
-						<%
-							}
-					}
-				}
-				//for에 초기화식 안넣는 방법 없을까요?
-				//int k는 의미없음
-				for(int k; (n%7) != 0; n++){
-				%>
-						<td>&nbsp;</td>
-						
-				<%
-				}
-			%>
+								</c:if>
+							</c:forEach>
+						</div>
+					</td> 
+				</c:if>
+				
+				<c:if test="${i%7 == 0 }">
+					</tr><tr>
+				</c:if>
+			</c:forEach>
+			<!-- td 반복 후 채워지지 않는 자리가 있다면... -->
+			<c:if test="${endDay + (firstDayOfWeek-1) % 7 != 0}">
+				<c:forEach begin="1" end="${7 - ((endDay + (firstDayOfWeek-1)) % 7)}" step="1">
+					<td>&nbsp;</td>
+				</c:forEach>
+			</c:if>
 		</tr>
 	</table>
 </body>

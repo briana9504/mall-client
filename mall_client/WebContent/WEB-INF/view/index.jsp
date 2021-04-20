@@ -1,142 +1,95 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import ="java.util.*" %>
-<%@ page import ="mall.client.vo.*" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>index</title>
 </head>
 <body>
 	<div>
 		<jsp:include page="/WEB-INF/view/inc/mainMenu.jsp"></jsp:include>
 	</div>	
 	
-	<!-- 책제목 검색, 카테고리-->
-	<%
-		List<Ebook> ebookList = (List<Ebook>)(request.getAttribute("ebookList"));
-		int currentPage = (int)request.getAttribute("currentPage");
-		int lastPage = (int)request.getAttribute("lastPage");
-		String categoryName = null;
-		if(request.getAttribute("categoryName") != null){
-			categoryName = (String)request.getAttribute("categoryName");
-		}	
-		String searchWord = null;
-		if(request.getAttribute("searchWord") != null){
-			searchWord = (String)request.getAttribute("searchWord");
-		}
-		//카테고리 리스트
-		List<String> categoryList = (List<String>)(request.getAttribute("categoryList"));;
-				
-	%>
-	
 	<h1>index</h1>
-	<!-- 5개씩 보여주기, 그 후 밑에 줄로 내리기 -->
+
 	<!-- best ebook  상품 5개 출력 -->
 	
 	<h3>Best Ebook</h3>
 	<table border="1">
 		<tr>
-	<%
-		List<Map<String, Object>> bestOrdersList = (List<Map<String, Object>>)(request.getAttribute("bestOrdersList"));
-		for(Map m: bestOrdersList){
-	%>
-			<td>
-				<div><img src="<%=request.getContextPath()%>/img/default.jpg"></div>
-						<!-- EbookOneController -> EbookDao.selectEbookOne -> ebookOne.jsp -->
-						<div>
-							<a href="<%=request.getContextPath()%>/EbookOneController?ebookNo=<%=m.get("ebookNo")%>">
-								<%=m.get("ebookTitle")%>
-							</a>
-						</div>
-						<div>&#8361;<%=m.get("ebookPrice") %></div>
-			
-			</td>
-	<%
-		}
-	%>
+			<c:forEach var="m" items="${bestOrdersList}">
+				<td>
+					<div><img src="${pageContext.request.contextPath}/img/default.jpg"></div>
+					<!-- EbookOneController -> EbookDao.selectEbookOne -> ebookOne.jsp -->
+					<div>
+						<a href="${pageContext.request.contextPath}/EbookOneController?ebookNo=${m.ebookNo}">
+							${m.ebookTitle}
+						</a>
+					</div>
+					<div>&#8361;${m.ebookPrice}</div>
+				</td>
+			</c:forEach>
 		</tr>
 	</table>
 	
-	<!-- ebook 상품 출력 -->
+	
 	<h3>ebookList</h3>	
-	
 	<!-- 카테고리 목록 -->
-			<a href="<%=request.getContextPath()%>/IndexController">전체</a>
-	<%
-		for(String cName: categoryList){
-	%>
-			<a href="<%=request.getContextPath()%>/IndexController?categoryName=<%=cName%>"><%=cName%></a>	
-	<%
-		}
-	%>
+		<a href="${pageContext.request.contextPath}/IndexController">전체</a>
+		<c:forEach var="cName" items="${categoryList}">
+			<a href="${pageContext.request.contextPath}/IndexController?categoryName=${cName}">${cName}</a>	
+		</c:forEach>
 	<table border="1">
-		<tr>
-		<%
-			int i = 0;
-			for(Ebook ebook : ebookList){
-				i += 1;
-		%>
-				
+		<c:forEach begin="0" end="14" var="i" step="${i+5}">
+			<tr>
+				<c:forEach begin="${i}" end="${i+4}" var="ebook" items="${ebookList}">
 					<td>
-						<div><img src="<%=request.getContextPath()%>/img/default.jpg"></div>
+						<div><img src="${pageContext.request.contextPath}/img/default.jpg"></div>
 						<!-- EbookOneController -> EbookDao.selectEbookOne -> ebookOne.jsp -->
 						<div>
-							<a href="<%=request.getContextPath()%>/EbookOneController?ebookNo=<%=ebook.getEbookNo()%>">
-								<%=ebook.getEbookTitle()%>
+							<a href="${pageContext.request.contextPath}/EbookOneController?ebookNo=${ebook.ebookNo}">
+								${ebook.ebookTitle}
 							</a>
 						</div>
-						<div>&#8361;<%=ebook.getEbookPrice()%></div>
+						<div>&#8361;${ebook.ebookPrice}</div>
 					</td>
-		<%
-				if(i%5==0){
-		%>
-						</tr><tr>
-		<%
-				}
-			}
-		%>
-		</tr>
+				</c:forEach>
+			</tr>
+		</c:forEach>
+		<!-- ebook 상품 출력 -->
+		<!-- 5개씩 보여주기, 그 후 밑에 줄로 내리기 -->
 	</table>
-	<%
-		if(currentPage > 1){
-			if(categoryName == null){
-				if(searchWord == null){
-					%>
-						<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage-1%>">이전</a>
-					<%
-				} else{
-				%>
-					<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage-1%>&searchWord=<%=searchWord%>">이전</a>
-				<%		
-				}
-			} else{
-	%>
-			<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage-1%>&categoryName=<%=categoryName%>">이전</a>
-	<%
-			}
-		}
+	<c:if test="${currentPage > 1}">
+		<c:if test="${categoryName == null}">
+			<c:if test="${searchWord == null}">
+				<a href="${pageContext.request.contextPath}/IndexController?currentPage=${currentPage-1}">이전</a>
+			</c:if>
+			<c:if test="${searchWord != null}">
+				<a href="${pageContext.request.contextPath}/IndexController?currentPage=${currentPage-1}&searchWord=${searchWord}">이전</a>
+			</c:if>
+		</c:if>
+		<c:if test="${categoryName != null}">
+			<a href="${pageContext.request.contextPath}/IndexController?currentPage=${currentPage-1}&categoryName=${categoryName}">이전</a>
+		</c:if>
+	</c:if>
 	
-		if(currentPage < lastPage){
-			if(categoryName == null){
-				if(searchWord == null){
-				%>
-					<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage+1%>">다음</a>
-				<%	
-				} else{
-			%>
-				<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage+1%>&searchWord=<%=searchWord%>">다음</a>
-			<%	
-				}
-			}else{
-	%>
-			<a href="<%=request.getContextPath()%>/IndexController?currentPage=<%=currentPage+1%>&categoryName=<%=categoryName%>">다음</a>
-	<%
-			}
-		}
-	%>
-	<!-- 검색기능 넣기 -->	
-	<form action="<%=request.getContextPath()%>/IndexController" method="get">
+	<c:if test="${currentPage < lastPage}">
+		<c:if test="${categoryName == null}">
+			<c:if test="${searchWord == null}">
+				<a href="${pageContext.request.contextPath}/IndexController?currentPage=${currentPage+1}">다음</a>
+			</c:if>
+			<c:if test="${searchWord != null}">
+				<a href="${pageContext.request.contextPath}/IndexController?currentPage=${currentPage+1}&searchWord=${searchWord}">다음</a>
+			</c:if>
+		</c:if>
+		<c:if test="${categoryName != null}">
+			<a href="${pageContext.request.contextPath}/IndexController?currentPage=${currentPage+1}&categoryName=${categoryName}">다음</a>
+		</c:if>
+	</c:if>
+	
+	<!-- 검색기능 넣기 : 책제목 검색 -->	
+	<form action="${pageContext.request.contextPath}/IndexController" method="get">
 		ebookTitle:
 		<input type="text" name="searchWord">
 		<button type="submit">검색</button>
