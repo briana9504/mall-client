@@ -43,7 +43,7 @@
 
 	<!-- Best Sellers -->
 
-	<div class="best_sellers">
+	<div class="best_sellers" id="bestSellers">
 		<div class="container">
 			<div class="row">
 				<div class="col text-center">
@@ -99,7 +99,48 @@
 			</div>
 		</div>
 	</div>
-	<!-- Banner -->
+
+	<!-- 접속자 수 -->
+
+	<div class="deal_ofthe_week">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-6">
+					<div class="deal_ofthe_week_img">
+						<img src="images/bobo.png" alt="">
+					</div>
+				</div>
+				<div class="col-lg-6 text-right deal_ofthe_week_col">
+					<div class="deal_ofthe_week_content d-flex flex-column align-items-center float-right">
+						<div class="section_title">
+							<h2>접속자 수</h2>
+						</div>
+						<ul class="timer">
+							<li class="d-inline-flex flex-column justify-content-center align-items-center">
+								<div id="" class="timer_num">${today[1]}</div>
+								<div class="timer_unit">Month</div>
+							</li>
+							<li class="d-inline-flex flex-column justify-content-center align-items-center">
+								<div id="" class="timer_num">${today[2]}</div>
+								<div class="timer_unit">Day</div>
+							</li>
+							<li class="d-inline-flex flex-column justify-content-center align-items-center">
+								<div id="" class="timer_num">${statsCount}</div>
+								<div class="timer_unit">오늘접속자</div>
+							</li>
+							<li class="d-inline-flex flex-column justify-content-center align-items-center">
+								<div id="" class="timer_num">${total}</div>
+								<div class="timer_unit">전체접속자</div>
+							</li>
+						</ul>
+						<div class="red_button deal_ofthe_week_button"><a href="#">shop now</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 인기 카테고리 -->
 	<div class="new_arrivals">
 		<div class="container">
 			<div class="row">
@@ -119,21 +160,21 @@
 				<div class="col-md-4">
 					<div class="banner_item align-items-center" style="background-image:url(images/poem.jpg)">
 						<div class="banner_category">
-							<a href="categories.html">poem</a>
+							<a href="${pageContext.request.contextPath}/EbookListController?categoryName=poem">poem</a>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="banner_item align-items-center" style="background-image:url(images/novel.jpg)">
 						<div class="banner_category">
-							<a href="categories.html">novel</a>
+							<a href="${pageContext.request.contextPath}/EbookListController?categoryName=novel">novel</a>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="banner_item align-items-center" style="background-image:url(images/romance.jpg)">
 						<div class="banner_category">
-							<a href="categories.html">romance</a>
+							<a href="${pageContext.request.contextPath}/EbookListController?categoryName=romance">romance</a>
 						</div>
 					</div>
 				</div>
@@ -189,7 +230,9 @@
 										<div class="product_price">&#8361;${m.ebookPrice}</div>
 									</div>
 								</div>
-								<div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
+								<c:if test="${loginClient != null && m.ebookState.equals('판매중')}">
+									<div class="red_button add_to_cart_button"><a href="${pageContext.request.contextPath}/InsertCartController?ebookNo=${m.ebookNo}">add to cart</a></div>
+								</c:if>
 							</div>
 						</c:forEach>
 						
@@ -199,45 +242,7 @@
 		</div>
 	</div>
 
-	<!-- Deal of the week -->
 
-	<div class="deal_ofthe_week">
-		<div class="container">
-			<div class="row align-items-center">
-				<div class="col-lg-6">
-					<div class="deal_ofthe_week_img">
-						<img src="images/deal_ofthe_week.png" alt="">
-					</div>
-				</div>
-				<div class="col-lg-6 text-right deal_ofthe_week_col">
-					<div class="deal_ofthe_week_content d-flex flex-column align-items-center float-right">
-						<div class="section_title">
-							<h2>Deal Of The Week</h2>
-						</div>
-						<ul class="timer">
-							<li class="d-inline-flex flex-column justify-content-center align-items-center">
-								<div id="day" class="timer_num">03</div>
-								<div class="timer_unit">Day</div>
-							</li>
-							<li class="d-inline-flex flex-column justify-content-center align-items-center">
-								<div id="hour" class="timer_num">15</div>
-								<div class="timer_unit">Hours</div>
-							</li>
-							<li class="d-inline-flex flex-column justify-content-center align-items-center">
-								<div id="minute" class="timer_num">45</div>
-								<div class="timer_unit">Mins</div>
-							</li>
-							<li class="d-inline-flex flex-column justify-content-center align-items-center">
-								<div id="second" class="timer_num">23</div>
-								<div class="timer_unit">Sec</div>
-							</li>
-						</ul>
-						<div class="red_button deal_ofthe_week_button"><a href="#">shop now</a></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
 	
 

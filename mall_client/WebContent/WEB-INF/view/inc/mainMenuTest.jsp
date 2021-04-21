@@ -10,7 +10,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-6">
-						<div class="top_nav_left">저희 EbookMall 더 잘 이용하기 위해서는 로그인해 주십시오.</div>
+						<div class="top_nav_left">EbookMall의 여러가지 기능을 이용하려면 로그인해 주십시오.</div>
 					</div>
 					<div class="col-md-6 text-right">
 						<div class="top_nav_right">
@@ -35,9 +35,10 @@
 						</div>
 						<nav class="navbar">
 							<ul class="navbar_menu">
-								<li><a href="${pageContext.request.contextPath}/IndexController">home</a></li>
+								<li><a href="${pageContext.request.contextPath}/IndexController#bestSellers">베스트셀러</a></li>
 								<li><a href="${pageContext.request.contextPath}/InsertClientController">회원가입</a></li>
 								<li><a href="${pageContext.request.contextPath}/EbookCalendarController">신간달력</a></li>
+								<li><a href="${pageContext.request.contextPath}/EbookListController">ebookList</a></li>
 							</ul>
 							<ul class="navbar_user">								
 								<li>
@@ -126,11 +127,11 @@
 						<nav class="navbar">
 							<ul class="navbar_menu">
 								<li><a href="${pageContext.request.contextPath}/IndexController">home</a></li>
-								<li><a href="${pageContext.request.contextPath}/OrdersListController">주문리스트</a></li>
+								<li><a href="${pageContext.request.contextPath}/IndexController#bestSellers">베스트셀러</a></li>
+								<li><a href="${pageContext.request.contextPath}/EbookListController">ebookList</a></li>					
 								<li><a href="${pageContext.request.contextPath}/EbookCalendarController">신간달력</a></li>
 								<li><a href="${pageContext.request.contextPath}/ClientOneController">회원정보</a></li>
-								<li><a href="#">베스트셀러</a></li>
-								<li><a href="#">ebook목록보기</a></li>
+								<li><a href="${pageContext.request.contextPath}/OrdersListController">주문리스트</a></li>		
 								<li><a href="${pageContext.request.contextPath}/LogoutController">로그아웃</a></li>
 							</ul>
 							<ul class="navbar_user">

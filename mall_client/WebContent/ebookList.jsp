@@ -190,7 +190,9 @@
 													<div class="product_price">&#8361;${m.ebookPrice}</div>
 												</div>
 											</div>
-											<div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
+											<c:if test="${loginClient != null && m.ebookState.equals('판매중')}">
+												<div class="red_button add_to_cart_button"><a href="${pageContext.request.contextPath}/InsertCartController?ebookNo=${m.ebookNo}">add to cart</a></div>
+											</c:if>
 										</div>
 									</c:forEach>
 								</div>

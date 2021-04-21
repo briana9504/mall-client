@@ -6,7 +6,7 @@ public class DBUtil {
 	public Connection getConnection() {
 		Connection conn = null;
 		try {
-			Class.forName("org.mariadb.jdbc.Driver");
+			//Class.forName("org.mariadb.jdbc.Driver"); 실행할때마다 로딩하고 있음... 불필요한 코드-> 톰캣이 켜질때 로딩 단 한번
 			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/mall","root","java1004");
 		} catch(Exception e) {
 			e.printStackTrace();

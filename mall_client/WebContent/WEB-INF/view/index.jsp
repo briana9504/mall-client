@@ -11,6 +11,11 @@
 		<jsp:include page="/WEB-INF/view/inc/mainMenu.jsp"></jsp:include>
 	</div>	
 	
+	<div>
+		<div>오늘 접속자 : ${statsCount}</div>
+		<div>전체 접속자 : ${total}</div>
+	</div>
+	
 	<h1>index</h1>
 
 	<!-- best ebook  상품 5개 출력 -->
