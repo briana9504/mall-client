@@ -87,21 +87,24 @@ public class IndexController extends HttpServlet {
 			request.setAttribute("lastPage", lastPage);
 			request.setAttribute("ebookList", ebookList);
 		}
-		//접속사 관련 데이터
-		long total = this.statsDao.selectStatsTotal();//전체 날짜 접속자 수
+		//접속자 관련 데이터
+		
 		//오늘 날짜
 		Stats stats = this.statsDao.selectStatsByToday();
 		long statsCount = 0;
+		long total = 0;	
+		
+		total = this.statsDao.selectStatsTotal();//전체 날짜 접속자 수
 		if(stats != null) {
 			statsCount = stats.getStatsCount();
 		}
-		String now = this.statsDao.selectStatsByToday().getStatsDay(); 
-		String[] today = now.split("-");
-		for(String m: today) {
-			System.out.println(m);
-		}
+		
+		Calendar calendar = Calendar.getInstance();
+		int month = (calendar.get(Calendar.MONTH))+1;
+		int today = calendar.get(Calendar.DAY_OF_MONTH);
 		
 		//(View forward)index.jsp파일 연결
+		request.setAttribute("month", month);
 		request.setAttribute("today", today);
 		request.setAttribute("total", total);
 		request.setAttribute("statsCount", statsCount);

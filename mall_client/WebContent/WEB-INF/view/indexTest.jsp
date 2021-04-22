@@ -117,11 +117,11 @@
 						</div>
 						<ul class="timer">
 							<li class="d-inline-flex flex-column justify-content-center align-items-center">
-								<div id="" class="timer_num">${today[1]}</div>
+								<div id="" class="timer_num">${month}</div>
 								<div class="timer_unit">Month</div>
 							</li>
 							<li class="d-inline-flex flex-column justify-content-center align-items-center">
-								<div id="" class="timer_num">${today[2]}</div>
+								<div id="" class="timer_num">${today}</div>
 								<div class="timer_unit">Day</div>
 							</li>
 							<li class="d-inline-flex flex-column justify-content-center align-items-center">
