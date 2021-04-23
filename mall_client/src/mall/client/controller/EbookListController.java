@@ -98,7 +98,7 @@ public class EbookListController extends HttpServlet {
 		request.setAttribute("categoryName", categoryName);
 		request.setAttribute("categoryList", categoryList);
 		request.setAttribute("currentPage", currentPage);
-		RequestDispatcher rd = request.getRequestDispatcher("/ebookList.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/ebook/ebookList.jsp");
 		rd.forward(request, response);
 	}
 }

@@ -61,14 +61,23 @@
 	</table>
 	<!-- InsertCartController?ebookNo - cartDao.insertCart() -> redirect:CartListController -->
 	<!-- 로그인 중이거나 판매중이 아니면 버튼을 누를 수 없음 -->
-	<a href="${pageContext.request.contextPath}/InsertCartController?ebookNo=${ebook.ebookNo}">
-		<c:if test="${loginClient == null || !ebook.ebookState.equals('판매중')}">
+	
+	<c:if test="${loginClient == null || !ebook.ebookState.equals('판매중')}">
+		<a href="${pageContext.request.contextPath}/InsertCartController?ebookNo=${ebook.ebookNo}">
 			<button type="submit" disabled="disabled">장바구니추가</button>
-		</c:if>
-		<c:if test="${loginClient != null && ebook.ebookState.equals('판매중')}">
+		</a>
+		<a href="${pageContext.request.contextPath}/InsertOrdersContorller?ebookNo=${ebook.ebookNo}">
+			<button type="submit" disabled="disabled">바로주문</button>
+		</a>
+	</c:if>
+	<c:if test="${loginClient != null && ebook.ebookState.equals('판매중')}">
+		<a href="${pageContext.request.contextPath}/InsertCartController?ebookNo=${ebook.ebookNo}">
 			<button type="submit">장바구니추가</button>
-		</c:if>
-	</a>	
+		</a>
+		<a href="${pageContext.request.contextPath}/InsertOrdersContorller?ebookNo=${ebook.ebookNo}">
+			<button type="submit">바로주문</button>
+		</a>
+	</c:if>	
 	<!-- 바로구매...? -->
 	<!-- 리뷰 -->
 	<!-- 별점...? -->

@@ -31,7 +31,7 @@ public class CartListController extends HttpServlet {
 		List<Map<String, Object>> cartList = this.cartDao.selectCartList((Client)session.getAttribute("loginClient"));
 		//forward
 		request.setAttribute("cartList", cartList);
-		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/view/cart/cartList.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/view/cart/cartListTest.jsp");
 		rd.forward(request, response);
 	}
 
