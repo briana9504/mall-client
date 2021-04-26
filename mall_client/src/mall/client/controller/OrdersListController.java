@@ -52,7 +52,7 @@ public class OrdersListController extends HttpServlet {
 		request.setAttribute("lastPage", lastPage);
 		request.setAttribute("currentPage", currentPage);
 		request.setAttribute("ordersList", ordersList);
-		request.getRequestDispatcher("/WEB-INF/view/orders/ordersList.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/view/orders/ordersListTest.jsp").forward(request, response);
 	}
 
 }

@@ -25,14 +25,14 @@
 		</tr>
 
 	<c:forEach var="m" items="${ordersList}">
-				<tr>
-					<td>${m.ordersNo}</td>
-					<td>${m.ebookNo}</td>
-					<td>${m.ebookTitle}</td>
-					<td>${m.ebookPrice}</td>
-					<td>${m.ordersDate.substring(0,10)}</td>
-					<td>${m.ordersState}</td>
-				</tr>
+			<tr>
+				<td>${m.ordersNo}</td>
+				<td>${m.ebookNo}</td>
+				<td>${m.ebookTitle}</td>
+				<td>${m.ebookPrice}</td>
+				<td>${m.ordersDate.substring(0,10)}</td>
+				<td>${m.ordersState}</td>
+			</tr>
 	</c:forEach>
 
 	</table>

@@ -84,6 +84,6 @@ public class EbookCalendarController extends HttpServlet {
 		request.setAttribute("currentMonth", currentMonth);
 		request.setAttribute("endDay", endDay);
 		request.setAttribute("firstDayOfWeek", firstDayOfWeek);
-		request.getRequestDispatcher("/WEB-INF/view/ebook/ebookCalendar.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/view/ebook/ebookCalendarTest.jsp").forward(request, response);
 	}
 }
