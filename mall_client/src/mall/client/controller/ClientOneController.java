@@ -39,7 +39,7 @@ public class ClientOneController extends HttpServlet {
 		List<Map<String, Object>> clientOneList = this.clientdao.selectClientOne(client);
 		//clientOne으로 forward
 		request.setAttribute("clientOneList", clientOneList);
-		request.getRequestDispatcher("/WEB-INF/view/client/clientOne.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/view/client/clientOneTest.jsp").forward(request, response);
 	}
 
 

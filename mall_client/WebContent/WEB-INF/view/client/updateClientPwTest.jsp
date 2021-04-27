@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>orderList</title>
+<title>updateClientPw</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Colo Shop Template">
@@ -52,29 +52,17 @@
 
 			<div class="col-lg-12 contact_col">
 				<div class="contact_contents">
-					<h1>주문목록</h1>
+					<!-- 필요한 내용 넣기 -->
+					<h1>비밀번호 수정</h1>
+					<form action="${pageContext.request.contextPath}/UpdateClientPwController" method="post">
+						<div>
+							새 비밀번호:
+							<input type="password" name="clientPw">
+						</div>
+						<button type="submit">비밀번호 바꾸기</button>
+					</form>
 					
-					<table class="table">
-						<tr>
-							<td>주문번호</td>
-							<td>이북번호</td>
-							<td>ebook제목</td>
-							<td>가격</td>
-							<td>주문날짜</td>
-							<td>주문상태</td>
-						</tr>
-							<c:forEach var="m" items="${ordersList}">
-									<tr>
-										<td>${m.ordersNo}</td>
-										<td>${m.ebookNo}</td>
-										<td>${m.ebookTitle}</td>
-										<td>${m.ebookPrice}</td>
-										<td>${m.ordersDate.substring(0,10)}</td>
-										<td>${m.ordersState}</td>
-									</tr>
-							</c:forEach>
-
-					</table>
+					
 					<div>
 						<p>(800) 686-6688</p>
 						<p>info.deercreative@gmail.com</p>

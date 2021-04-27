@@ -47,7 +47,7 @@
 							<h5>ebook Category</h5>
 						</div>
 						<ul class="sidebar_categories">
-							<c:if test="${categoryName == null }">
+							<c:if test="${categoryName == null }">// categoryName이 null이면 전체에 눌러진 표시 해주기
 								<li class="active"><a href="${pageContext.request.contextPath}/EbookListController"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>전체</a></li>
 							</c:if>
 							
@@ -169,7 +169,7 @@
 								<!-- Product Grid -->
 
 								<div class="product-grid">
-
+									<!-- ebookList -->
 									<!-- Product 1 -->
 									<c:forEach var="m" items="${ebookList}">
 										<div class="product-item men">

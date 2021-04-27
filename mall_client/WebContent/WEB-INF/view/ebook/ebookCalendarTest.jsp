@@ -19,6 +19,23 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/contact_styles.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/contact_responsive.css">
 
+<style>
+td{
+	height: 120px;
+	width: 14%;
+}
+td:hover {
+	background: #d3d3d3;
+}
+th{
+	text-align: center;
+	height: 40px;
+ 	background: #F78181;	
+}
+h3{
+	text-align: center;
+}
+</style>
 </head>
 
 <body>
@@ -57,11 +74,14 @@
 					<h1>신간목록</h1>
 					<div>
 						<a href="${pageContext.request.contextPath}/EbookCalendarController?currentYear=${preYear}&currentMonth=${preMonth}">이전달</a>
-						<span>${currentYear}년</span>
-						<span>${currentMonth}월</span>
+						<h3>
+							<span>${currentYear}년</span>
+							<span>${currentMonth}월</span>
+						</h3>
+						
 						<a href="${pageContext.request.contextPath}/EbookCalendarController?currentYear=${nextYear}&currentMonth=${nextMonth}">다음달</a>
 					</div>
-					<table border="1">
+					<table class="table">
 						<tr>
 							<th>일</th>
 							<th>월</th>

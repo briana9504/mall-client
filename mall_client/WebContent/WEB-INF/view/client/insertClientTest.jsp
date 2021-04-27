@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>orderList</title>
+<title>insertClient</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Colo Shop Template">
@@ -52,29 +52,21 @@
 
 			<div class="col-lg-12 contact_col">
 				<div class="contact_contents">
-					<h1>주문목록</h1>
+					<!-- 필요한 내용 넣기 -->
+					<h1>회원가입</h1><!-- 동일한 주소를 입력해도 doget과 dopost를 나뉘어서 사용해서 같은 주소도 가능 -->
+					<form method="post" action="${pageContext.request.contextPath}/InsertClientController">
+						<div>
+							Mail:
+							<input type="text" name="clientMail" required="required">
+						</div>
+						<div>
+							PW:
+							<input type="password" name="clientPw" required="required">
+						</div>
+						<button type="submit">회원가입</button>
+					</form>
 					
-					<table class="table">
-						<tr>
-							<td>주문번호</td>
-							<td>이북번호</td>
-							<td>ebook제목</td>
-							<td>가격</td>
-							<td>주문날짜</td>
-							<td>주문상태</td>
-						</tr>
-							<c:forEach var="m" items="${ordersList}">
-									<tr>
-										<td>${m.ordersNo}</td>
-										<td>${m.ebookNo}</td>
-										<td>${m.ebookTitle}</td>
-										<td>${m.ebookPrice}</td>
-										<td>${m.ordersDate.substring(0,10)}</td>
-										<td>${m.ordersState}</td>
-									</tr>
-							</c:forEach>
-
-					</table>
+					
 					<div>
 						<p>(800) 686-6688</p>
 						<p>info.deercreative@gmail.com</p>

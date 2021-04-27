@@ -27,7 +27,7 @@ public class UpdateClientPwController extends HttpServlet {
 			return;
 		}	
 		//forward
-		request.getRequestDispatcher("/WEB-INF/view/client/updateClientPw.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/view/client/updateClientPwTest.jsp").forward(request, response);
 	}
 	
 	//pw변경

@@ -72,9 +72,15 @@
 						</p>
 					</div>
 					<div class="free_delivery d-flex flex-row align-items-center justify-content-center">
-						<a href="${pageContext.request.contextPath}/InsertOrdersContorller?ebookNo=${ebook.ebookNo}">
-						<span class="ti-truck"></span><span>바로 주문하기</span>
-						</a>
+						<c:if test="${loginClient == null || !ebook.ebookState.equals('판매중')}">
+							<span class="ti-truck"></span><span>바로 주문하기</span><!-- 주문완됨 -->
+						</c:if>
+						<c:if test="${loginClient != null && ebook.ebookState.equals('판매중')}"><!-- 주문가능 -->
+							<a href="${pageContext.request.contextPath}/InsertOrdersContorller?ebookNo=${ebook.ebookNo}">
+								<span class="ti-truck"></span><span>바로 주문하기</span>
+							</a>
+						</c:if>
+						
 					</div>
 					<div class="original_price"></div>
 					<div class="product_price">&#8361;${ebook.ebookPrice}</div>

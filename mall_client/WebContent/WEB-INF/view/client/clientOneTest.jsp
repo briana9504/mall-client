@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>orderList</title>
+<title>clientOne</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Colo Shop Template">
@@ -52,32 +52,46 @@
 
 			<div class="col-lg-12 contact_col">
 				<div class="contact_contents">
-					<h1>주문목록</h1>
-					
+				
+					<!-- 필요한 내용 넣기 -->
+					<h1>회원정보</h1>
 					<table class="table">
-						<tr>
-							<td>주문번호</td>
-							<td>이북번호</td>
-							<td>ebook제목</td>
-							<td>가격</td>
-							<td>주문날짜</td>
-							<td>주문상태</td>
-						</tr>
-							<c:forEach var="m" items="${ordersList}">
-									<tr>
-										<td>${m.ordersNo}</td>
-										<td>${m.ebookNo}</td>
-										<td>${m.ebookTitle}</td>
-										<td>${m.ebookPrice}</td>
-										<td>${m.ordersDate.substring(0,10)}</td>
-										<td>${m.ordersState}</td>
-									</tr>
-							</c:forEach>
-
+						<c:forEach var="m" items="${clientOneList}">
+							<tr>
+								<td>회원번호</td>
+								<td>${m.clientNo}</td>
+							</tr>
+							<tr>
+								<td>메일</td>
+								<td>${m.clientMail}</td>
+							</tr>
+							<tr>
+								<td>가입날짜</td>
+								<td>${m.clientDate.substring(0,10)}</td>
+							</tr>
+							<tr>
+								<td>구입 책 갯수</td>
+								<td>${m.ebookCnt}권</td>
+							</tr>
+							<tr>
+								<td>사용한 돈</td>
+								<td>&#8361;${m.sumPrice}</td>
+							</tr>
+						</c:forEach>
 					</table>
+					
+					
+									s
+					
 					<div>
 						<p>(800) 686-6688</p>
-						<p>info.deercreative@gmail.com</p>
+						<p>
+							<!-- /updateClientPwControlle.doGet() -> updateClientPw.jsp --!>
+							<!-- ClientDao.updateClientPw().doPost -> 성공: session.invalidate() - redirect:/IndexController -->
+							<a href="${pageContext.request.contextPath}/UpdateClientPwController"><button>비밀번호수정</button></a>
+							<!-- DeleteClientController - ClientDao.deleteClient() cartDao.deleteCartByClient()  - redirect:/IndexController -->
+							<a href="${pageContext.request.contextPath}/DeleteClientController">회원탈퇴</a>
+						</p>
 					</div>
 					<div>
 						<p>mm</p>

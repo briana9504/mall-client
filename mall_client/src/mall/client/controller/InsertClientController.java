@@ -22,7 +22,7 @@ public class InsertClientController extends HttpServlet {
 			response.sendRedirect(request.getContextPath()+"/IndexController");
 			return;
 		}
-		request.getRequestDispatcher("/WEB-INF/view/client/insertClient.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/view/client/insertClientTest.jsp").forward(request, response);
 	}
 
 	//action C-> M -> redirect
